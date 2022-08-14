@@ -1,4 +1,3 @@
-
 import useApi from "./useApi";
 import countries from "./countries.json"
 import { generateRandomUrls, generateRandomNumber } from "./generateRandomUrls";
@@ -7,10 +6,10 @@ import { useEffect, useState } from "react";
 
 function App() {
 
-  const flags = generateRandomUrls(countries, 6);
-  const [images, isLoading] = useApi(flags);
+  const [flags, codes] = generateRandomUrls(countries, 6);
+  const [images, isLoading] = useApi(flags, codes);
   const [contents, setContent] = useState([...images]);
-
+  const [history, setHistory] = useState([]);
   const loadImage = () => {
     if (isLoading) {
       return <h1>Loading....</h1>
@@ -20,9 +19,9 @@ function App() {
         {contents.map((content) => {
           return <li
             key={count += 1}
-            className="falgs"
-            onClick={handelClickOnflag.bind("", contents)}>
-            <img src={content}></img>
+            onClick={handelClickOnflag.bind("", contents, content.code)}
+          >
+            <img src={content.flag}></img>
           </li>
 
         })}
@@ -32,36 +31,32 @@ function App() {
     }
   }
 
-  // images.forEach(image => {
-
-  //   content.push(<li key={count += 1} class="falgs"><img src={image}></img></li>)
-  // });
-
   useEffect(() => {
     setContent(images);
   }, [images])
 
-  const handelClickOnflag = (deck) => { 
+  const handelClickOnflag = (deck, code) => {
     //randomly places the flags when clicked
     const _shuffle = () => {
       let shuffledDeck = [];
       let workingDeck = [...deck];
       let randomNumber;
-
       for (let i = 0; i < deck.length; i++) {
         randomNumber = generateRandomNumber(0, workingDeck.length);
         shuffledDeck[i] = workingDeck[randomNumber];
-        workingDeck.splice(randomNumber, 1)
+        workingDeck.splice(randomNumber, 1);
       }
       return shuffledDeck;
     }
 
+    setHistory(oldArray => [...oldArray, code])
     setContent(_shuffle());
+
+
   }
 
   return (
     <div className="App">
-      {console.log("render")}
       <div>
         {loadImage()}
       </div>

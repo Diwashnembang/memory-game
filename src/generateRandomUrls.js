@@ -10,21 +10,21 @@ const makeValidUrl = (code) => {
 const generateRandomUrls = (list, howManytimes) => {
 
     let flagUrls = []
-
+	let countryCodes=[];
     let newFlagUrl;
 
     for (let i = 0; i < howManytimes; i++) {
-        let countyCode = list[generateRandomNumber(0, list.length)].code;
-        newFlagUrl = makeValidUrl(countyCode);
+        let countryCode = list[generateRandomNumber(0, list.length)].code;
+        newFlagUrl = makeValidUrl(countryCode);
         flagUrls.push(newFlagUrl);
-
+		countryCodes.push(countryCode);
     }
 
 
 
 
 
-    return flagUrls;
+    return [flagUrls,countryCodes];
 }
 
 
