@@ -4,27 +4,27 @@ const generateRandomNumber = (min, max) => {
 }
 
 const makeValidUrl = (code) => {
-    let url = `https://countryflagsapi.com/png/${code} `
+    let url = `https://countryflagsapi.com/png/${code}`;
     return url;
 }
 const generateRandomUrls = (list, howManytimes) => {
 
     let flagUrls = []
-	let countryCodes=[];
+    let countryCodes = [];
     let newFlagUrl;
 
     for (let i = 0; i < howManytimes; i++) {
         let countryCode = list[generateRandomNumber(0, list.length)].code;
         newFlagUrl = makeValidUrl(countryCode);
         flagUrls.push(newFlagUrl);
-		countryCodes.push(countryCode);
+        countryCodes.push(countryCode);
     }
 
 
 
 
 
-    return [flagUrls,countryCodes];
+    return [flagUrls, countryCodes];
 }
 
 

@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+* {
+    --font: 'Caveat', 'cursive';
+}
+
+body {
+
+    font-family: var(--font);
+    background-color: #beb8b8;
+
+}
+
+.nagivation {
+    width: 100vw;
+    background-color: #423E37;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    font-size: 45px;
+    align-items: center;
+
+}
+
+.big {
+    font-size: 65px;
+    font-weight: bold;
+}
+
+.title,
+.help {
+    padding: 0 3rem;
+}

@@ -1,37 +1,42 @@
 import React, { useState, useEffect } from "react"
 
-const useApi = (urls, codes) => {
-    let count = 1;
+const useApi = (urls, codes, levelClear) => {
+
+    const [code, setCode] = useState(codes)
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
+        // console.log(codes);
+        setData([]);
+        setIsLoading(true)
+
         for (let i = 0; i < urls.length; i++) {
 
-            console.log("the url is ", urls[i])
             // setNewUrl(url);
             const apiCall = new Request(
                 urls[i],
+
                 {
                     mode: 'cors',
                     method: 'get',
                 },
             )
+
             try {
+
+
                 const response = await (await fetch(apiCall)).blob();
-                console.log("fetch has been called", count);
-                count++;
                 const reader = new FileReader();
                 reader.readAsDataURL(response);
                 reader.onloadend = () => {
                     if (i === urls.length - 1) {
                         setIsLoading(false);
-                        console.log("done")
                     }
                     let base64data = reader.result;
                     let data = {
                         flag: base64data,
-                        code: codes[i]
+                        code: code[i]
                     };
                     setData((oldArray) => [...oldArray, data]);
                 }
@@ -48,11 +53,10 @@ const useApi = (urls, codes) => {
 
 
     useEffect(() => {
-        console.log("useEffect api");
-
         fetchData();
 
-    }, []);
+    }, [levelClear]);
+
 
     return [data, isLoading]
 
@@ -61,3 +65,4 @@ const useApi = (urls, codes) => {
 }
 
 export default useApi
+

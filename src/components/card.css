@@ -1,0 +1,8 @@
+.image img {
+    max-width: 290px;
+    max-height: 212px;
+}
+
+.image:hover {
+    cursor: pointer;
+}

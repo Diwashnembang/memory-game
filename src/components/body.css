@@ -1,0 +1,29 @@
+.body {
+    display: grid;
+    column-gap: 45px;
+    grid-template-columns: repeat(8, 1fr);
+    margin: 95px 100px 0px 100px;
+    row-gap: 90px;
+    grid-template-areas: ".  score score . . best best ."
+        "flag flag flag flag flag flag flag flag";
+    font-size: 45px;
+    text-align: center;
+
+
+}
+
+
+.score {
+    grid-area: score;
+    font-size: 45px;
+}
+
+.bestScore {
+    grid-area: best;
+    font-size: 45px;
+
+}
+
+.flags {
+    grid-area: flag;
+}
