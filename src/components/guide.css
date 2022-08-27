@@ -1,0 +1,11 @@
+.tutorial {
+    position: absolute;
+    top: 170px;
+    left: 750px;
+    right: 100px;
+    background-color: inherit;
+    border-radius: 1rem;
+    max-width: 400px;
+    padding: 1rem;
+
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import { generateRandomUrls, generateRandomNumber } from "../generateRandomUrls";
 import useApi from "../useApi";
@@ -6,6 +6,7 @@ import Countries from "../countries.json";
 
 import "./body.css"
 import Flags from "./Flags";
+import Retry from "./Retry";
 
 
 
@@ -58,17 +59,22 @@ const Body = () => {
             setState(prev => prev + 5);
         }
 
+    }, [clicked])
+
+    useEffect(() => {
 
         if (history.length >= flags.length && flags.length) {
             setleveClear(!levelClear);
-            history.current = [];
+            setHistory([]);
             setClicked("");
             setGameOver(false);
             console.log("clear");
         }
-    }, [clicked])
+    }, [history])
+
 
     const clickHandler = (e) => {
+
         if (clicked === e.target.alt) {
             setClicked("gameOver");
         } else {
@@ -80,12 +86,24 @@ const Body = () => {
         const newDeck = shuffle(flags);
         setFlag(newDeck);
     }
+
+    const restart = () => {
+
+        setleveClear(!levelClear);
+        setHistory([]);
+        setClicked("");
+        setGameOver(false);
+    }
     return (
         < div className="body" >
             <div className="score">Score : {score}</div>
             <div className="bestScore">Best : {bestScore}</div>
             <div className="flags">
-                {isLoading ? "loading" : gameOver ? "Game Over" : <Flags flags={flags} handleClick={clickHandler} />}
+                {isLoading ?
+                    "loading"
+                    : gameOver ?
+                        <Retry restart={restart} />
+                        : <Flags flags={flags} handleClick={clickHandler} />}
             </div>
 
         </div >
