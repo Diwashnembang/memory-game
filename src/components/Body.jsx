@@ -28,7 +28,9 @@ const Body = () => {
     const [levelClear, setleveClear] = useState(false);
     const [data, isLoading] = useApi(urls, codes, levelClear);
     const [flags, setFlag] = useState([]);
-    const history = useRef([]);
+    const [history, setHistory] = useState([]);
+    const [score, setState] = useState(0);
+    const [bestScore, setBestScore] = useState(0);
 
     const [gameOver, setGameOver] = useState(false);
     const [clicked, setClicked] = useState('');
@@ -38,18 +40,26 @@ const Body = () => {
     }, [data]);
 
     useEffect(() => {
-        console.log(history.current.includes(clicked));
-        if (history.current.includes(clicked) || clicked === "gameOver") {
+
+        if (score >= bestScore) {
+            setBestScore(score);
+        }
+
+    }, [score])
+
+    useEffect(() => {
+        if (history.includes(clicked) || clicked === "gameOver") {
             setGameOver(true);
+            setState(0);
             console.log("gameover");
         } else if (clicked) {
 
-            history.current = [...history.current, clicked]
-
+            setHistory(prev => [...prev, clicked]);
+            setState(prev => prev + 5);
         }
 
 
-        if (history.current.length >= flags.length && flags.length) {
+        if (history.length >= flags.length && flags.length) {
             setleveClear(!levelClear);
             history.current = [];
             setClicked("");
@@ -72,8 +82,8 @@ const Body = () => {
     }
     return (
         < div className="body" >
-            <div className="score">Score : 100</div>
-            <div className="bestScore">Best : 100</div>
+            <div className="score">Score : {score}</div>
+            <div className="bestScore">Best : {bestScore}</div>
             <div className="flags">
                 {isLoading ? "loading" : gameOver ? "Game Over" : <Flags flags={flags} handleClick={clickHandler} />}
             </div>
