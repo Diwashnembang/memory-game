@@ -6,3 +6,11 @@
 .image:hover {
     cursor: pointer;
 }
+
+@media screen and (max-width : 620px) {
+
+    .image img {
+        max-width: 109px;
+        max-height: 86px;
+    }
+}

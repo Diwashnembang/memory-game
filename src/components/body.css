@@ -27,3 +27,18 @@
 .flags {
     grid-area: flag;
 }
+
+@media screen and (max-width : 620px) {
+
+    .body {
+        column-gap: 8px;
+        margin: 35px 8px 0 8px;
+        font-size: 12px;
+        row-gap: 43px;
+    }
+
+    .score,
+    .bestScore {
+        font-size: inherit;
+    }
+}
