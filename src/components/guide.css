@@ -9,3 +9,17 @@
     padding: 1rem;
 
 }
+
+@media screen and (max-width:620px) {
+
+    .tutorial {
+        top: 49px;
+        left: 8px;
+        right: 8px;
+        min-height: calc(100vh - 48px);
+        display: flex;
+        align-items: center;
+        border-radius: 2px;
+    }
+
+}
