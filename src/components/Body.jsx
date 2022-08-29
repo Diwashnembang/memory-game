@@ -7,6 +7,7 @@ import Countries from "../countries.json";
 import "./body.css"
 import Flags from "./Flags";
 import Retry from "./Retry";
+import { useRef } from "react";
 
 
 
@@ -23,6 +24,7 @@ const shuffle = (deck) => {
     return shuffledDeck;
 }
 
+
 const Body = () => {
     const countries = Countries;
     const [urls, codes] = generateRandomUrls(countries, 6);
@@ -35,10 +37,36 @@ const Body = () => {
 
     const [gameOver, setGameOver] = useState(false);
     const [clicked, setClicked] = useState('');
+    const [level, setLevel] = useState(0);
+    const [time, setTime] = useState(30);
+    const maxtime = useRef(time);
+    const palyAgain = useRef(false);
+
 
     useEffect(() => {
+        palyAgain.current = false;
         setFlag(data);
     }, [data]);
+
+    useEffect(() => {
+        if (!isLoading) {
+
+            setTimeout(() => {
+                if (time > 0 && !gameOver) {
+
+                    setTime(prev => prev - 1);
+                }
+            }, 1000);
+
+            if (time === 0) {
+                setState(0);
+                setGameOver(true);
+
+            }
+        }
+    }, [time, isLoading])
+
+
 
     useEffect(() => {
 
@@ -65,12 +93,22 @@ const Body = () => {
 
         if (history.length >= flags.length && flags.length) {
             setleveClear(!levelClear);
+            setLevel(prev => prev + 1);
             setHistory([]);
             setClicked("");
             setGameOver(false);
+            setTime(maxtime.current);
             console.log("clear");
         }
     }, [history])
+
+    useEffect(() => {
+        if (!palyAgain.current && maxtime.current > 10 && level > 0) {
+
+            maxtime.current = maxtime.current - 5;
+            setTime(maxtime.current);
+        }
+    }, [level]);
 
 
     const clickHandler = (e) => {
@@ -89,14 +127,19 @@ const Body = () => {
 
     const restart = () => {
 
+        palyAgain.current = true;
         setleveClear(!levelClear);
         setHistory([]);
         setClicked("");
         setGameOver(false);
+        maxtime.current = 30;
+        setLevel(0);
+        setTime(30);
     }
     return (
         < div className="body" >
             <div className="score">Score : {score}</div>
+            <div className="time">Time : {time}</div>
             <div className="bestScore">Best : {bestScore}</div>
             <div className="flags">
                 {isLoading ?

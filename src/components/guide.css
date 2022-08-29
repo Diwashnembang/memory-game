@@ -1,7 +1,7 @@
 .tutorial {
     position: absolute;
     top: 170px;
-    left: 750px;
+    left: calc((100vw / 2) - 200px);
     right: 100px;
     background-color: inherit;
     border-radius: 1rem;
